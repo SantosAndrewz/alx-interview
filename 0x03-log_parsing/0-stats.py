@@ -8,7 +8,6 @@ import sys
 
 if __name__ == '__main__':
 
-
     file_size = 0
     line_count = 0
     codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
