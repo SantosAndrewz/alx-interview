@@ -20,7 +20,7 @@ def valid_place(queens, row, col):
     if 1 in queens[row]:
         return False
 
-    for x, y in zip(range(row, -1, -1), range(col, -1, -1))
+    for x, y in zip(range(row, -1, -1), range(col, -1, -1)):
         if queens[x][y] == 1:
             return False
 
@@ -29,6 +29,7 @@ def valid_place(queens, row, col):
             return False
 
     return True
+
 
 def solve_nqueens(queens, col):
     """
@@ -47,6 +48,7 @@ def solve_nqueens(queens, col):
             solve_nqueens(queens, col + 1)
             queens[row][col] = 0
 
+
 def display_solution(queens):
     """
     Prints all the possible positions of the queens on the chess board.
@@ -60,24 +62,35 @@ def display_solution(queens):
                 sol.append([row, col])
     print(sol)
 
+
 def nqueens(size):
+    """
+    Sets up the chess board and calls up the process for finding solutions.
+    Args:
+        size: size of the NxN chess board.
+    """
+
     board = [[0] * size for _ in range(size)]
     solve_nqueens(board, 0)
 
+
 if __name__ == "__main__":
-    
+    """
+    validates input arguments
+    """
+
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
-    
+
     try:
         N = int(sys.argv[1])
     except ValueError:
         print("N must be a number")
         sys.exit(1)
-    
+
     if N < 4:
         print("N must be at least 4")
         sys.exit(1)
-    
+
     nqueens(N)
