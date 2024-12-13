@@ -24,10 +24,10 @@ def determine_primes(n):
             for y in range(x * x, n + 1, x):
                 is_prime[y] = False
 
-    primes_to = [0] * (n + 1)
+    prms_to = [0] * (n + 1)
     for x in range(1, n + 1):
-        primes_to[x] = primes_to[x - 1] + (1 if is_prime[x] else 0)
-    return is_prime, primes_to
+        prms_to[x] = prms_to[x - 1] + (1 if is_prime[x] else 0)
+    return is_prime, prms_to
 
 
 def isWinner(x, nums):
@@ -45,13 +45,21 @@ def isWinner(x, nums):
         return None
 
     max_n = max(nums)
-    _, primes_to = determine_primes(max_n)
+    is_prime, _ = determine_primes(max_n)
 
     wins_ben = 0
     wins_maria = 0
 
     for n in nums:
-        if primes_to[n] % 2 == 1:
+        pm = [p for p in range(2, n + 1) if is_prime[p]]
+        turn = 0
+
+        while pm:
+            prime_now = pm.pop(0)
+            pm = [p for p in pm if p % prime_now != 0]
+            turn = 1 - turn
+
+        if turn == 1:
             wins_maria += 1
         else:
             wins_ben += 1
