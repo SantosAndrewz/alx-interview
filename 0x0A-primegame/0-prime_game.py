@@ -15,14 +15,14 @@ def determine_primes(n):
         tuple: a list showing if numbers are prime and
         a list of cumulative prime counts.
     """
+    is_prime = []
+    sieve_out = [True] * (n + 1)
 
-    is_prime = [True] * (n + 1)
-    is_prime[0] = is_prime[1] = False
-
-    for x in range(2, int(n**0.5) + 1):
-        if is_prime[x]:
-            for y in range(x * x, n + 1, x):
-                is_prime[y] = False
+    for x in range(2, n + 1):
+        if (sieve_out[x]):
+            is_prime.append(x)
+            for y in range(x, n + 1, x):
+                sieve_out[y] = False
 
     return is_prime
 
@@ -38,28 +38,18 @@ def isWinner(x, nums):
         str: Name of the winner or None if winner can not be determined.
     """
 
-    if x < 1 or not nums or any(n < 1 for n in nums):
+    if x < 1 or not nums:
         return None
-
-    max_n = max(nums)
-    is_prime = determine_primes(max_n)
 
     wins_ben = 0
     wins_maria = 0
 
-    for n in nums:
-        prm_lft = [i for i in range(2, n + 1) if is_prime[i]]
-
-        turn = 0
-        while prm_lft:
-            prm_now = prm_lft.pop(0)
-            prm_lft = [p for p in prm_lft if p % prm_now !=0]
-            turn = 1 - turn
-
-        if turn == 1:
-            wins_maria += 1
-        else:
+    for y in range(x):
+        is_prime = determine_primes(nums[y])
+        if len(is_prime) % 2 == 0:
             wins_ben += 1
+        else:
+            wins_maria += 1
 
     if wins_maria > wins_ben:
         return "Maria"
